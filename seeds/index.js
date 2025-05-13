@@ -21,7 +21,7 @@ const seedDB = async () => {
     const camp = new Campground({
       title: `${sample(descriptors)} ${sample(places)}`,
       location: `${cities[random1000].city}, ${cities[random1000].state}`,
-      price: Math.floor(Math.random() * 20) + 20,
+      price: Math.floor(Math.random() * 30) + 20,
       image: `https://picsum.photos/400?random=${Math.random()}`,
       description:
         "What is Camping? Camping is an outdoor activity that involves staying the night/more than one night in a protective shelter out in nature. Camping is a broad term but in its essence, camping is a way of getting away from the hassle of urban life, to a more natural environment for a limited time.",
