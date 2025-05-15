@@ -7,16 +7,34 @@
           <label class="form-lable" for="title">Title</label>
           <input class="form-control" type="text" id="title" name="campground[title]" value="<%=campground.title %>"
             required>
+          <div class="invalid-feedback">
+            Please fill the title field.
+          </div>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
         </div>
         <div class="mb-3">
           <label class="form-lable" for="location">Location</label>
           <input class="form-control" type="text" id="location" name="campground[location]"
             value="<%=campground.location %>" required>
+          <div class="invalid-feedback">
+            Please fill the location field.
+          </div>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
         </div>
         <div class="mb-3">
           <label class="form-lable" for="image">Image Url</label>
           <input class="form-control" type="text" id="image" name="campground[image]" value="<%=campground.image %>"
             required>
+          <div class="invalid-feedback">
+            Please fill the image filed.
+          </div>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
         </div>
         <div class="mb-3">
           <label class="form-lable" for="price">Price</label>
@@ -25,19 +43,31 @@
             <input type="number" placeholder="0.00" class="form-control" id="price"
               aria-label="Amount (to the nearest dollar)" name="campground[price]" value="<%=campground.price %>"
               required>
-            <!-- <span class="input-group-text">.00</span> -->
+            <div class="invalid-feedback">
+              Please fill the price filed.
+            </div>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
           </div>
         </div>
         <div class="mb-3">
           <label class="form-lable" for="description">Description</label>
           <textarea class="form-control" type="text" id="description" name="campground[description]"
             required><%=campground.description %></textarea>
+          <div class="invalid-feedback">
+            Please fill the description filed.
+          </div>
+          <div class="valid-feedback">
+            Looks good!
+          </div>
         </div>
-
         <div class="mb-3">
           <button class="btn btn-info" type="submit">Update Campground</button>
+          <a class="btn btn-primary" href="/campgrounds/<%= campground._id %>">Back to Campground details</a>
         </div>
-      </form>
-      <a href="/campgrounds/<%= campground._id %>">Back to Campground details</a>
     </div>
+  </div>
+  </form>
+  </div>
   </div>
