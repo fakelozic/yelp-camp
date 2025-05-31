@@ -23,7 +23,16 @@ const seedDB = async () => {
       title: `${sample(descriptors)} ${sample(places)}`,
       location: `${cities[random1000].city}, ${cities[random1000].state}`,
       price: Math.floor(Math.random() * 30) + 20,
-      image: `https://picsum.photos/400?random=${Math.random()}`,
+      images: [
+        {
+          url: "https://res.cloudinary.com/duyolsy3m/image/upload/v1748701934/yelp-camp/ogadnag5exvtny5ukf5b.jpg",
+          filename: "yelp-camp/ogadnag5exvtny5ukf5b",
+        },
+        {
+          url: "https://res.cloudinary.com/duyolsy3m/image/upload/v1748701936/yelp-camp/sdbj6oi12rhdcqct83bg.jpg",
+          filename: "yelp-camp/sdbj6oi12rhdcqct83bg",
+        },
+      ],
       description:
         "What is Camping? Camping is an outdoor activity that involves staying the night/more than one night in a protective shelter out in nature. Camping is a broad term but in its essence, camping is a way of getting away from the hassle of urban life, to a more natural environment for a limited time.",
     });
