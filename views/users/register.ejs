@@ -1,4 +1,4 @@
-<% layout('layouts/boilerplate.ejs') %>
+<!-- <% layout('layouts/boilerplate.ejs') %>
 
   <h1>Register</h1>
   <form action="/register" method="post" class="needs-validation" novalidate>
@@ -29,4 +29,209 @@
     </div>
 
     <button type="submit" class="btn btn-dark">Register</button>
-  </form>
+  </form> -->
+<% layout('layouts/boilerplate.ejs') %>
+
+    <head>
+        <!-- Head content from boilerplate.ejs will be here -->
+        <style>
+            .auth-modern-container {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 90vh;
+                padding: 2rem 1rem;
+            }
+
+            .auth-modern-card {
+                max-width: 420px;
+                /* Max width of the card for consistency */
+                width: 100%;
+                background-color: #fff;
+                border-radius: 1.5rem;
+                box-shadow: 0 15px 45px rgba(0, 0, 0, 0.15);
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .auth-card-image-header {
+                height: 200px;
+                background-size: cover;
+                background-position: center;
+                /* 
+              CRITICAL: Replace with your camping image URL! 
+              Using a different example for register page.
+            */
+                background-image: url('https://images.unsplash.com/photo-1487730116645-74489c95b41b?auto=format&fit=crop&w=600&q=80');
+            }
+
+            .auth-card-form-body {
+                padding: 2rem 2.5rem 2.5rem;
+            }
+
+            .auth-card-form-body h1 {
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 700;
+                font-size: 1.8rem;
+                margin-bottom: 1.75rem;
+                color: #333;
+                text-align: left;
+            }
+
+            .form-group-custom {
+                margin-bottom: 1.1rem;
+                /* Slightly less margin for more fields */
+                position: relative;
+            }
+
+            .form-control-custom {
+                background-color: #fde2e9;
+                /* Light pinkish background */
+                border: 1px solid #fcc8d6;
+                border-radius: 0.75rem;
+                padding: 0.85rem 1rem;
+                padding-left: 2.85rem;
+                /* For icon */
+                font-size: 0.95rem;
+                color: #555;
+                width: 100%;
+                box-sizing: border-box;
+                transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+            }
+
+            .form-control-custom::placeholder {
+                color: #b58da0;
+            }
+
+            .form-control-custom:focus {
+                background-color: #fef6f8;
+                border-color: #f7a5ba;
+                box-shadow: 0 0 0 0.2rem rgba(240, 128, 170, 0.25);
+                color: #333;
+            }
+
+            .input-icon {
+                position: absolute;
+                top: 50%;
+                left: 1rem;
+                transform: translateY(-50%);
+                color: #c78096;
+                font-size: 1rem;
+                pointer-events: none;
+            }
+
+            .btn-auth-submit {
+                background-color: #8a5a78;
+                /* Darker purple/pink for button */
+                border: none;
+                color: white;
+                padding: 0.85rem;
+                width: 100%;
+                border-radius: 0.75rem;
+                font-weight: 600;
+                font-size: 1rem;
+                letter-spacing: 0.025em;
+                transition: background-color 0.2s ease, transform 0.1s ease;
+                cursor: pointer;
+                margin-top: 0.75rem;
+                /* Space above button */
+            }
+
+            .btn-auth-submit:hover {
+                background-color: #704860;
+                transform: translateY(-2px);
+            }
+
+            .bottom-link-group {
+                text-align: center;
+                margin-top: 1.5rem;
+                /* Space above this link */
+            }
+
+            .bottom-link-group a {
+                color: #777;
+                text-decoration: none;
+                font-size: 0.9rem;
+                font-weight: 500;
+            }
+
+            .bottom-link-group a:hover {
+                color: #c78096;
+                text-decoration: underline;
+            }
+
+            /* Bootstrap validation feedback adjustments (basic) */
+            .needs-validation .form-control-custom.is-invalid,
+            .was-validated .form-control-custom:invalid {
+                border-color: #dc3545 !important;
+                /* Ensure override if needed */
+            }
+
+            .invalid-feedback {
+                display: none;
+                width: 100%;
+                margin-top: .20rem;
+                /* Tighter spacing for feedback */
+                font-size: .80em;
+                /* Smaller feedback text */
+                color: #dc3545;
+                text-align: left;
+                /* Align feedback with input start */
+                padding-left: 0.25rem;
+            }
+
+            /* Forcing feedback to show with Bootstrap's logic */
+            .was-validated .form-control-custom:invalid~.invalid-feedback,
+            .form-control-custom.is-invalid~.invalid-feedback {
+                display: block;
+            }
+        </style>
+    </head>
+
+    <div class="auth-modern-container">
+        <div class="auth-modern-card">
+            <div class="auth-card-image-header">
+                <!-- Background image is set via CSS -->
+            </div>
+            <div class="auth-card-form-body">
+                <h1>Create Account</h1>
+                <form action="/register" method="post" class="needs-validation" novalidate>
+                    <div class="form-group-custom">
+                        <span class="input-icon">✉️</span>
+                        <input class="form-control form-control-custom" type="email" id="email" name="email"
+                            placeholder="Email" required />
+                        <div class="invalid-feedback">Please provide a valid email.</div>
+                    </div>
+
+                    <div class="form-group-custom">
+                        <span class="input-icon">📛</span>
+                        <input class="form-control form-control-custom" type="text" id="name" name="name"
+                            placeholder="Full Name" required />
+                        <div class="invalid-feedback">Please fill in your name.</div>
+                    </div>
+
+                    <div class="form-group-custom">
+                        <span class="input-icon">👤</span>
+                        <input class="form-control form-control-custom" type="text" id="username" name="username"
+                            placeholder="Username" required />
+                        <div class="invalid-feedback">Please choose a username.</div>
+                    </div>
+
+                    <div class="form-group-custom">
+                        <span class="input-icon">🔑</span>
+                        <input class="form-control form-control-custom" type="password" id="password" name="password"
+                            placeholder="Create a password" required />
+                        <div class="invalid-feedback">Please create a password.</div>
+                    </div>
+
+                    <!-- For simplicity, I'm omitting the terms and conditions switch from the visual example. Add if needed. -->
+
+                    <button type="submit" class="btn btn-auth-submit">Register</button>
+                </form>
+                <div class="bottom-link-group">
+                    <a href="/login">Already have an account? Login</a>
+                </div>
+            </div>
+        </div>
+    </div>

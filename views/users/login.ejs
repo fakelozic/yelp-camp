@@ -1,20 +1,225 @@
+<!-- <% layout('layouts/boilerplate.ejs') %>
+    <div class="container mx-auto mt-3">
+
+    <h1>Login</h1>
+    <form action="/login" method="post" class="needs-validation" novalidate>
+      <div class="mb-3">
+        <label class="form-lable" for="username">Username</label>
+        <input class="form-control" type="text" id="username" name="username" required />
+        <div class="invalid-feedback">Please fill the Username field.</div>
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-lable" for="password">Password</label>
+        <input class="form-control" type="password" id="password" name="password" required />
+        <div class="invalid-feedback">Please fill the Password field.</div>
+        <div class="valid-feedback">Looks good!</div>
+      </div>
+
+      <button type="submit" class="btn btn-dark">Login</button>
+    </form>
+  </div> -->
+
+
 <% layout('layouts/boilerplate.ejs') %>
 
-  <h1>Login</h1>
-  <form action="/login" method="post" class="needs-validation" novalidate>
-    <div class="mb-3">
-      <label class="form-lable" for="username">Username</label>
-      <input class="form-control" type="text" id="username" name="username" required />
-      <div class="invalid-feedback">Please fill the Username field.</div>
-      <div class="valid-feedback">Looks good!</div>
-    </div>
+    <style>
+        .auth-modern-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            /* Adjust to position card vertically */
+            padding: 1rem;
+        }
 
-    <div class="mb-3">
-      <label class="form-lable" for="password">Password</label>
-      <input class="form-control" type="password" id="password" name="password" required />
-      <div class="invalid-feedback">Please fill the Password field.</div>
-      <div class="valid-feedback">Looks good!</div>
-    </div>
+        .auth-modern-card {
+            max-width: 420px;
+            /* Max width of the card */
+            width: 100%;
+            background-color: #fff;
+            border-radius: 1.5rem;
+            /* More pronounced rounded corners */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            /* Important to clip the image to the card's rounded corners */
+            display: flex;
+            flex-direction: column;
+        }
 
-    <button type="submit" class="btn btn-dark">Login</button>
-  </form>
+        .auth-card-image-header {
+            height: 220px;
+            /* Height of the image section */
+            background-size: cover;
+            background-position: center;
+            /* Replace with your camping image URL */
+            background-image: url('https://images.unsplash.com/photo-1470246973918-29a93221c455?auto=format&fit=crop&w=600&q=80');
+            /* Example camping image - CHOOSE YOUR OWN! */
+        }
+
+        .auth-card-form-body {
+            padding: 2rem 2.5rem;
+            /* Padding for the form area */
+        }
+
+        .auth-card-form-body h1 {
+            font-family: 'Montserrat', sans-serif;
+            /* Assuming you have this font or similar */
+            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+            text-align: left;
+            /* Title aligned left as per example */
+        }
+
+        .form-group-custom {
+            margin-bottom: 1.25rem;
+            position: relative;
+        }
+
+        .form-control-custom {
+            background-color: #fde2e9;
+            /* Light pinkish background for inputs */
+            border: 1px solid #fcc8d6;
+            /* Slightly darker pinkish border */
+            border-radius: 0.75rem;
+            /* Rounded inputs */
+            padding: 0.85rem 1rem;
+            /* Padding inside inputs */
+            padding-left: 2.75rem;
+            /* Padding for icon if you add one */
+            font-size: 0.95rem;
+            color: #555;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .form-control-custom::placeholder {
+            color: #b58da0;
+            /* Placeholder text color */
+        }
+
+        .form-control-custom:focus {
+            background-color: #fef6f8;
+            border-color: #f7a5ba;
+            box-shadow: 0 0 0 0.2rem rgba(240, 128, 170, 0.25);
+            /* Focus glow */
+            color: #333;
+        }
+
+        /* Basic icon styling (you'd use actual icon library like Font Awesome or Bootstrap Icons) */
+        .input-icon {
+            position: absolute;
+            top: 50%;
+            left: 1rem;
+            transform: translateY(-50%);
+            color: #c78096;
+            /* Icon color */
+            /* For real icons, you'd use an <i> or <svg> tag here */
+        }
+
+
+        .auth-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+        }
+
+        .form-check-input:checked {
+            background-color: #c78096;
+            /* Custom color for checked switch */
+            border-color: #c78096;
+        }
+
+        .form-check-label {
+            color: #777;
+        }
+
+        .forgot-password-link {
+            color: #777;
+            text-decoration: none;
+        }
+
+        .forgot-password-link:hover {
+            color: #c78096;
+            text-decoration: underline;
+        }
+
+        .btn-auth-submit {
+            background-color: #8a5a78;
+            /* Darker purple/pink for button */
+            border: none;
+            color: white;
+            padding: 0.85rem;
+            width: 100%;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.025em;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .btn-auth-submit:hover {
+            background-color: #704860;
+            transform: translateY(-2px);
+        }
+
+        .create-account-link {
+            display: block;
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #777;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .create-account-link:hover {
+            color: #c78096;
+            text-decoration: underline;
+        }
+    </style>
+
+    <div class="auth-modern-container">
+        <div class="auth-modern-card">
+            <div class="auth-card-image-header">
+                <!-- The background image is set via CSS -->
+            </div>
+            <div class="auth-card-form-body">
+                <h1>Login</h1>
+                <form action="/login" method="post" class="needs-validation" novalidate>
+                    <div class="form-group-custom">
+                        <!-- Basic placeholder for icon, replace with actual icon library -->
+                        <span class="input-icon">👤</span>
+                        <input class="form-control form-control-custom" type="text" id="username" name="username"
+                            placeholder="Username" required />
+                        <div class="invalid-feedback">Please fill the Username field.</div>
+                        <!-- Bootstrap's valid-feedback might not be ideal with custom input bg -->
+                        <!-- <div class="valid-feedback">Looks good!</div> -->
+                    </div>
+
+                    <div class="form-group-custom">
+                        <!-- Basic placeholder for icon, replace with actual icon library -->
+                        <span class="input-icon">🔑</span>
+                        <input class="form-control form-control-custom" type="password" id="password" name="password"
+                            placeholder="Password" required />
+                        <div class="invalid-feedback">Please fill the Password field.</div>
+                        <!-- <div class="valid-feedback">Looks good!</div> -->
+                    </div>
+
+                    <!-- <div class="auth-options">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="rememberMe" name="rememberMe">
+                        <label class="form-check-label" for="rememberMe">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password-link">Forgot password?</a>
+                </div> -->
+
+                    <button type="submit" class="btn btn-auth-submit">Login</button>
+                </form>
+                <a href="/register" class="create-account-link">Create Account</a>
+            </div>
+        </div>
+    </div>

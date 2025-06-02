@@ -1,6 +1,13 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 const catchAsync = require("../utils/catchAsync");
 const Campground = require("../models/campground");
 const { cloudinary } = require("../cloudinary");
+
+const maptilerClient = require("@maptiler/client");
+maptilerClient.config.apiKey = process.env.MAPTILER_API_KEY;
 
 module.exports.index = catchAsync(async (req, res) => {
   const campgrounds = await Campground.find({});
@@ -12,7 +19,14 @@ module.exports.renderNewForm = (req, res) => {
 };
 
 module.exports.createCampground = catchAsync(async (req, res, next) => {
+  const geoData = await maptilerClient.geocoding.forward(
+    req.body.campground.location,
+    { limit: 1 }
+  );
+  console.log("geoData", geoData.features[0].geometry);
+
   const campground = Campground(req.body.campground);
+  campground.geometry = geoData.features[0].geometry;
   campground.images = req.files.map((f) => ({
     url: f.path,
     filename: f.filename,
@@ -50,10 +64,14 @@ module.exports.renderEditForm = catchAsync(async (req, res) => {
 
 module.exports.updateCampground = catchAsync(async (req, res) => {
   const { id } = req.params;
-  console.log(req.body);
   const campground = await Campground.findByIdAndUpdate(id, {
     ...req.body.campground,
   });
+  const geoData = await maptilerClient.geocoding.forward(
+    req.body.campground.location,
+    { limit: 1 }
+  );
+  campground.geometry = geoData.features[0].geometry;
   const imgs = req.files.map((f) => ({
     url: f.path,
     filename: f.filename,

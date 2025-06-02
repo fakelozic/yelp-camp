@@ -1,7 +1,9 @@
 <% layout('layouts/boilerplate.ejs') %>
   <link rel="stylesheet" href="/css/stars.css" />
 
-  <div class="row mb-3">
+
+
+  <div class="row mb-3 container mx-auto mt-3">
     <div class="col-6">
       <div class="card mb-3">
         <div id="campgroundCarousel" class="carousel slide">
@@ -52,8 +54,10 @@
           <% } %>
             <div class="card-footer text-muted">2 days ago</div>
       </div>
+
     </div>
     <div class="col-6">
+      <div id="map" style="width: 500px; height: 300px;"></div>
       <!-- REVIEW SECTION -->
       <% if(currentUser){ %>
         <h2>Leave a Review</h2>
@@ -115,3 +119,8 @@
                 <% } %>
     </div>
   </div>
+  <script>
+    const maptilerApiKey = "<%- process.env.MAPTILER_API_KEY %>";
+    const campground = <%- JSON.stringify(campground) %>
+  </script>
+  <script src="/js/showPageMap.js"></script>
