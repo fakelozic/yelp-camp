@@ -3,6 +3,8 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const express = require("express");
+const mongoSanitize = require("express-mongo-sanitize");
+const helmet = require("helmet");
 
 const path = require("path");
 const mongoose = require("mongoose");
@@ -35,12 +37,56 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(mongoSanitize());
+// app.use(helmet({ contentSecurityPolicy: false }));
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      ...helmet.contentSecurityPolicy.getDefaultDirectives(), // Start with Helmet's defaults
+      "script-src": [
+        "'self'",
+        "https://cdn.jsdelivr.net", // For Bootstrap
+        "https://cdn.maptiler.com", // For MapTiler SDK
+        "https://api.maptiler.com",
+        "'unsafe-inline'", // MapTiler SDK might also need to connect here for tiles/data
+      ],
+      // You might also need to add sources for styles, workers, etc., for MapTiler
+      "style-src": [
+        "'self'",
+        "https://cdn.jsdelivr.net", // For Bootstrap CSS
+        "https://cdn.maptiler.com",
+        "https://api.maptiler.com",
+        "https://res.cloudinary.com/duyolsy3m/", // For MapTiler CSS if any
+        "'unsafe-inline'", // If MapTiler or Bootstrap use inline styles
+      ],
+      "worker-src": [
+        "'self'",
+        "blob:", // MapTiler SDK often uses web workers loaded via blob URLs
+      ],
+      "connect-src": [
+        "'self'",
+        "https://api.maptiler.com", // For MapTiler API calls to fetch map tiles, etc.
+      ],
+      // Add other directives as needed (img-src for map tiles, etc.)
+      "img-src": [
+        "'self'",
+        "data:",
+        "https://api.maptiler.com",
+        "https://res.cloudinary.com/duyolsy3m/",
+        "https://images.unsplash.com",
+      ], // For map tiles
+    },
+  })
+);
+
 const sessionConfig = {
+  name: "blah",
   secret: "this-should-be-better-secret!",
   resave: false,
   saveUninitialized: true,
   cookie: {
     httpOnly: true,
+    // secure: true,
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
     maxAge: 1000 * 60 * 60 * 24 * 7,
   },
