@@ -21,10 +21,14 @@ const campgroundsRoutes = require("./routes/campgrounds");
 const reviewsRoutes = require("./routes/reviews");
 const usersRoutes = require("./routes/users");
 
+const MondoDBStore = require("connect-mongo")(session);
+
+const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017/yelp-camp";
+
 main().catch((err) => console.log(err));
 
 async function main() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/yelp-camp");
+  await mongoose.connect(dbUrl);
   console.log("Database connected");
 }
 
@@ -79,7 +83,18 @@ app.use(
   })
 );
 
+const store = new MondoDBStore({
+  url: dbUrl,
+  secret: "this-should-be-better-secret!",
+  touchAfter: 24 * 3600,
+});
+
+store.on("error", function (e) {
+  console.log("SESSION STORE ERROR", e);
+});
+
 const sessionConfig = {
+  store,
   name: "blah",
   secret: "this-should-be-better-secret!",
   resave: false,
